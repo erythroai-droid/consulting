@@ -21,7 +21,7 @@ const title = 'PSB Consulting — accounting and legal consulting';
 const description = 'Ready-made companies with bank accounts, turnkey LLC registration, corporate documents, state register changes and digital signatures. Phone: +7 963 04-80-28.';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://psb-consulting.erythro.ai'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://psb.erythro.ai'),
   title, description,
   openGraph: { title, description, url: '/', siteName: 'PSB Consulting', type: 'website', locale: 'en_US', alternateLocale: ['ru_RU'] },
   twitter: { card: 'summary_large_image', title, description },
