@@ -430,6 +430,8 @@ html.static{--vh:100svh}
 html.static .sec{min-height:0}
 html.static .rvw{min-height:0}
 html.static .srv,html.static .par{border-radius:0;box-shadow:none}
+/* phones and touch tablets of any width (also a phone turned sideways, wider than 900px): the header always has its backdrop */
+html.static .hdr::before{opacity:1}
 
 @media (max-width:900px){
   .hdr{align-items:center;padding-block:10px}
@@ -620,3 +622,5 @@ html.static .ftr{min-height:0}
   .hero{height:clamp(500px,76svh,640px);min-height:0}
   .hero-in{inset-inline-start:calc(var(--gx) + 22px)}
 }
+/* sliders take sideways swipes; vertical moves still scroll the page */
+.hero,.rvw-stage{touch-action:pan-y}

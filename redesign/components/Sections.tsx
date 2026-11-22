@@ -29,6 +29,33 @@ function useStack(ref: RefObject<HTMLElement | null>) {
   }, [ready, ref]);
 }
 
+/**
+ * Horizontal swipe (finger or pen) on a slider: left = next, right = previous.
+ * The element gets touch-action: pan-y in CSS, so the page still scrolls vertically and the browser never takes a
+ * sideways move for itself. A move counts when it is mostly horizontal and longer than 45px.
+ */
+function useSwipe(ref: RefObject<HTMLElement | null>, onSwipe: (d: 1 | -1) => void) {
+  const cb = useRef(onSwipe);
+  useEffect(() => { cb.current = onSwipe; });
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    let x = 0, y = 0, id = -1;
+    const down = (e: PointerEvent) => { if (e.pointerType === "mouse") return; id = e.pointerId; x = e.clientX; y = e.clientY; };
+    const up = (e: PointerEvent) => {
+      if (e.pointerId !== id) return;
+      id = -1;
+      const dx = e.clientX - x, dy = e.clientY - y;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) cb.current(dx < 0 ? 1 : -1);
+    };
+    const cancel = () => { id = -1; };
+    node.addEventListener("pointerdown", down);
+    node.addEventListener("pointerup", up);
+    node.addEventListener("pointercancel", cancel);
+    return () => { node.removeEventListener("pointerdown", down); node.removeEventListener("pointerup", up); node.removeEventListener("pointercancel", cancel); };
+  }, [ref]);
+}
+
 /** Mask icon: the mockup's black SVG icons drawn in currentColor (gold on hover). */
 function Ico({ src, className = '' }: { src: string; className?: string }) {
   return <span className={`ico ${className}`} style={{ '--src': `url(${src})` } as CSSProperties} aria-hidden />;
@@ -145,6 +172,9 @@ export function Hero({ onLoadProgress }: { onLoadProgress: (v: number) => void }
       return n;
     });
   }, []);
+  const at = useRef(0);
+  at.current = i;
+  useSwipe(el, (d) => go(at.current + d, d));
 
   // slide change: the new photo wipes in from the side it comes from, the old one drifts and dims; title lines swap
   useEffect(() => {
@@ -433,6 +463,7 @@ export function Reviews() {
   }, [i]);
 
   const go = (n: number) => setI((n + REVIEWS.length) % REVIEWS.length);
+  useSwipe(stage, (d) => setI((cur) => (cur + d + REVIEWS.length) % REVIEWS.length));
   const r = REVIEWS[i];
   const run = playing && visible && !hold;
   return (
@@ -598,7 +629,6 @@ export function Footer() {
               <div><dt>{t('c_phone')}</dt><dd><a href={PHONE.href}>{PHONE.label}</a></dd></div>
               <div><dt>{t('c_addr')}</dt><dd>{ADDRESS}<br /><a href={MAP_URL} target="_blank" rel="noopener" className="ln">{t('map')} ↗</a></dd></div>
             </dl>
-            <button type="button" className="btn" onClick={() => openRequest({ kind: 'call' })}>{t('call_order')}</button>
           </Reveal>
         </div>
         <Reveal from="up" className="ct-form">
