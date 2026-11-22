@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Preloader from '@/components/Preloader';
 import ScrollTop from '@/components/ScrollTop';
 import RequestDialog from '@/components/RequestDialog';
-import { About, Catalog, Footer, Marquee, Hero, Partners, Reviews, Services, useLateRefresh } from '@/components/Sections';
+import { About, Catalog, Footer, Hero, Partners, Reviews, Services, useLateRefresh } from '@/components/Sections';
 import { SmoothScroll } from '@/lib/scroll';
 
 export default function Page() {
@@ -35,7 +35,6 @@ function Content({ onLoadProgress }: { onLoadProgress: (v: number) => void }) {
       <Hero onLoadProgress={onLoadProgress} />
       <Services />
       <About />
-      <Marquee />
       <Catalog />
       <Reviews />
       <Partners />

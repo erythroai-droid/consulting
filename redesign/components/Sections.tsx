@@ -298,29 +298,24 @@ export function About() {
           <Reveal className="ab-note"><p>{t('adv_note')}</p></Reveal>
         </div>
       </div>
+      <Marquee />
     </section>
   );
 }
 
 /** Service names sliding sideways with the scroll, solid and outlined in turn: a band between About and the catalog. */
+/**
+ * The running line at the foot of About: it runs on its own (a CSS loop, also on phones), not with the scroll —
+ * with one-block-per-gesture scrolling a scroll-driven line only twitched during the glide.
+ * Two identical halves; the row moves by exactly one half per loop, so the seam never shows.
+ */
 export function Marquee() {
   const { t } = useI18n();
-  const ready = useScrollReady();
-  const row = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!ready) return;
-    const node = row.current!;
-    const tw = gsap.fromTo(node, { xPercent: 0 }, {
-      xPercent: -40, ease: 'none', force3D: false,
-      scrollTrigger: { trigger: node.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
-    });
-    return () => { tw.scrollTrigger?.kill(); tw.kill(); gsap.set(node, { clearProps: 'transform' }); };
-  }, [ready]);
-  const words = [1, 2, 3, 4, 1, 2].map((k) => t(`marq${k}`));
+  const half = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4].map((k) => t(`marq${k}`));   // one half is wider than a 2560px screen
   return (
     <div className="marq" aria-hidden>
-      <div ref={row} className="marq-row">
-        {words.map((w, k) => <span key={k} className={k % 2 ? 'o' : ''}>{w}<i>✦</i></span>)}
+      <div className="marq-row">
+        {[0, 1].map((h) => half.map((w, k) => <span key={`${h}-${k}`} className={k % 2 ? 'o' : ''}>{w}<i>✦</i></span>))}
       </div>
     </div>
   );

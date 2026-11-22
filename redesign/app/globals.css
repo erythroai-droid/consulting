@@ -234,9 +234,11 @@ html.static .hero-media{will-change:auto}
 .checks img{flex:none;margin-block-start:4px}
 .ab-note{margin-block-start:clamp(18px,3.5vh,48px)}
 .ab-note p{font-family:var(--serif);font-style:italic;font-size:clamp(15px,min(1.2vw,2.2vh),24px);line-height:1.6;padding-inline-start:clamp(22px,2.4vw,44px);border-inline-start:4px solid var(--gold)}
-.marq{position:relative;z-index:1;overflow:hidden;background:var(--white);padding-block:clamp(16px,4vh,64px) clamp(28px,6vh,96px);contain:paint}
+.marq{position:relative;z-index:1;overflow:hidden;background:var(--white);margin-inline:calc(var(--gx) * -1);padding-block:clamp(10px,1.8vh,28px);contain:paint}
 .marq-row{display:flex;width:max-content}
-.marq-row span{display:flex;align-items:center;font-family:var(--cond);font-weight:500;text-transform:uppercase;font-size:clamp(56px,min(9vw,15vh),210px);line-height:1;white-space:nowrap;color:var(--ink)}
+@media (prefers-reduced-motion:no-preference){.marq-row{animation:marq 70s linear infinite}}
+@keyframes marq{to{transform:translateX(-50%)}}
+.marq-row span{display:flex;align-items:center;font-family:var(--cond);font-weight:500;text-transform:uppercase;font-size:clamp(40px,min(6vw,7.5vh),130px);line-height:1;white-space:nowrap;color:var(--ink)}
 .marq-row span.o{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
 .marq-row i{font-style:normal;font-size:.32em;color:var(--gold);padding-inline:.7em;-webkit-text-stroke:0}
 
@@ -597,4 +599,24 @@ html.static .ftr{min-height:0}
   .par-half{align-items:center}
   .par-half li{width:auto;height:min(100%,260px)}
   .par-card{height:100%;aspect-ratio:16 / 10}
+}
+/* About: the running line closes the block, both fit one screen (desktop) */
+.about{padding-block-end:0}
+@media (min-width:901px){
+  .about{justify-content:flex-start}
+  .about .ab-grid{flex:1;min-height:0}
+  .about .marq{flex:none}
+  .about .sec-head{margin-block-end:clamp(14px,2.6vh,44px)}
+  .about .sec-head h2{font-size:clamp(26px,min(3.2vw,5.2vh),68px)}
+  .about .ab-big{height:clamp(220px,min(30vw,38vh),540px)}
+  .ab-copy .lead{font-size:clamp(16px,min(1.1vw,2.1vh),21px);line-height:1.6;margin-block-end:clamp(8px,1.6vh,30px)}
+  .checks .rv{padding:clamp(5px,.9vh,12px) 0;font-size:clamp(14px,min(.95vw,1.8vh),18px)}
+  .ab-note{margin-block-start:clamp(10px,2vh,32px)}
+  .ab-note p{font-size:clamp(14px,min(1.1vw,2vh),22px);line-height:1.5}
+}
+@media (max-width:900px){
+  .about .ab-grid{margin-block-end:clamp(36px,8vw,60px)}
+  /* phones: a shorter first screen, and the slide text clear of the gold column edge */
+  .hero{height:clamp(500px,76svh,640px);min-height:0}
+  .hero-in{inset-inline-start:calc(var(--gx) + 22px)}
 }
