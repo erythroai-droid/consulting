@@ -625,7 +625,11 @@ html.static .ftr{min-height:0}
    the slide title runs the full width */
 @media (max-width:900px){
   :root{--colw:104px;--logo-big:113px}   /* --logo-big: the header with the vertical logo, the slide text starts below it */
-  .logo.stack img,.logo.stack.sm img{width:var(--colw);padding:14px 13px}
+  .logo.stack img{width:var(--colw);padding:14px 13px}
+  .logo.stack.sm img{width:140px;padding:10px 13px}
+  .hdr-tel a{white-space:nowrap}
+  .hdr-r{padding-block:0}
+  .hdr.solid{padding-block:8px}
   .logo.stack picture{display:block}
   .hero-in{inset-inline-end:var(--gx)}
   .hero h1{max-width:none;font-size:clamp(36px,10.4vw,64px)}

@@ -12,8 +12,9 @@ export function Logo({ small = false, stack = false }: { small?: boolean; stack?
   const img = <img src="/img/logo.svg?v=4" alt="" width={288} height={80} />;
   return (
     <span className={`logo${small ? ' sm' : ''}${stack ? ' stack' : ''}`}>
-      {/* the header on a phone: the narrow gold column takes the vertical lockup (PSB over BUSINESS / CONSULTING) */}
-      {stack ? <picture><source media="(max-width: 900px)" srcSet="/img/logo-v.svg?v=1" width={137} height={114} />{img}</picture> : img}
+      {/* the header on a phone: the narrow gold column takes the vertical lockup (PSB over BUSINESS / CONSULTING);
+          once the header collapses on scroll it goes back to the small horizontal one */}
+      {stack && !small ? <picture><source media="(max-width: 900px)" srcSet="/img/logo-v.svg?v=1" width={137} height={114} />{img}</picture> : img}
       <span className="logo-t"><b>{BRAND}</b><i>{t('brand_sub')}</i></span>
     </span>
   );
