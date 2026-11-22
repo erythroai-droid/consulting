@@ -430,8 +430,6 @@ html.static{--vh:100svh}
 html.static .sec{min-height:0}
 html.static .rvw{min-height:0}
 html.static .srv,html.static .par{border-radius:0;box-shadow:none}
-/* phones and touch tablets of any width (also a phone turned sideways, wider than 900px): the header always has its backdrop */
-html.static .hdr::before{opacity:1}
 
 @media (max-width:900px){
   .hdr{align-items:center;padding-block:10px}
@@ -439,7 +437,6 @@ html.static .hdr::before{opacity:1}
   .logo img,.logo.sm img{width:var(--colw);padding:8px 12px}
   .hdr-tel button,.hdr-r>.lang{display:none}
   .hdr-tel a{font-size:18px}
-  .hdr::before{opacity:1}
   .hero{min-height:560px}
   :root{--logo-big:64px}
   .hero-in{inset-inline-start:var(--gx);bottom:130px}
