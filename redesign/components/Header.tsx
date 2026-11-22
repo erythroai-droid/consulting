@@ -7,11 +7,13 @@ import { openRequest } from './RequestDialog';
 import Flag from './Flag';
 
 /** Logo tile: the mockup's gold column with the emblem. */
-export function Logo({ small = false }: { small?: boolean }) {
+export function Logo({ small = false, stack = false }: { small?: boolean; stack?: boolean }) {
   const { t } = useI18n();
+  const img = <img src="/img/logo.svg?v=4" alt="" width={288} height={80} />;
   return (
-    <span className={`logo${small ? ' sm' : ''}`}>
-      <img src="/img/logo.svg?v=4" alt="" width={288} height={80} />
+    <span className={`logo${small ? ' sm' : ''}${stack ? ' stack' : ''}`}>
+      {/* the header on a phone: the narrow gold column takes the vertical lockup (PSB over BUSINESS / CONSULTING) */}
+      {stack ? <picture><source media="(max-width: 900px)" srcSet="/img/logo-v.svg?v=1" width={137} height={114} />{img}</picture> : img}
       <span className="logo-t"><b>{BRAND}</b><i>{t('brand_sub')}</i></span>
     </span>
   );
@@ -123,7 +125,7 @@ export default function Header() {
   return (
     <>
       <header className={`hdr${solid ? ' solid' : ''}${dark ? ' on-dark' : ''}`}>
-        <a href="#top" className="hdr-logo" aria-label={BRAND_FULL} onClick={(e) => go(e, '#top')}><Logo small={solid} /></a>
+        <a href="#top" className="hdr-logo" aria-label={BRAND_FULL} onClick={(e) => go(e, '#top')}><Logo small={solid} stack /></a>
         <nav className="hdr-nav" aria-label={t('menu')}>
           {NAV.map((n) => (
             <a key={n.href} href={n.href} className={active === n.href ? 'on' : ''} aria-current={active === n.href ? 'true' : undefined} onClick={(e) => go(e, n.href)}>

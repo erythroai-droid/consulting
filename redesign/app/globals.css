@@ -616,8 +616,21 @@ html.static .ftr{min-height:0}
 @media (max-width:900px){
   .about .ab-grid{margin-block-end:clamp(36px,8vw,60px)}
   /* phones: a shorter first screen, and the slide text clear of the gold column edge */
-  .hero{height:clamp(500px,76svh,640px);min-height:0}
+  .hero{height:clamp(540px,76svh,640px);min-height:0}
   .hero-in{inset-inline-start:calc(var(--gx) + 22px)}
 }
 /* sliders take sideways swipes; vertical moves still scroll the page */
 .hero,.rvw-stage{touch-action:pan-y}
+/* phones: a larger, vertical logo on a wider gold column; slider controls and the catalog button on the right;
+   the slide title runs the full width */
+@media (max-width:900px){
+  :root{--colw:104px;--logo-big:113px}   /* --logo-big: the header with the vertical logo, the slide text starts below it */
+  .logo.stack img,.logo.stack.sm img{width:var(--colw);padding:14px 13px}
+  .logo.stack picture{display:block}
+  .hero-in{inset-inline-end:var(--gx)}
+  .hero h1{max-width:none;font-size:clamp(36px,10.4vw,64px)}
+  .hero-foot{justify-content:flex-end}
+  .hero-bar{justify-items:end}
+  /* the controls now sit partly over the gold column: the gold "previous" button would vanish there */
+  .hero-ctl .rnd.gold{background:transparent;border-color:currentColor;color:#fff}
+}

@@ -53,3 +53,30 @@ ${divider}
 `;
 writeFileSync(join(root, 'public', 'img', 'logo.svg'), svg);
 console.log(`public/img/logo.svg  ${svg.length} bytes  viewBox ${W}x${H}`);
+
+// ---- vertical lockup for the narrow (phone) header: PSB on top, a thin rule, then BUSINESS / CONSULTING
+// set to exactly the width of PSB, so the tile stays narrow and the descriptor stays legible.
+{
+  const P = 4, size = 64, cap = size * 0.727;
+  const top = P + cap;                                            // PSB baseline
+  const w = line(heavy, 'PSB', size, 0.02, 0, 0).end;             // measure first
+  const psbV = line(heavy, 'PSB', size, 0.02, P, r2(top));
+  const ruleY = r2(top + 11);
+  // descriptor: size so that "CONSULTING" (with its tracking) spans the PSB width
+  const tr = 0.06, unit = line(light, 'CONSULTING', 10, tr, 0, 0).end / 10;
+  const dSize = r2(w / unit), dCap = dSize * 0.727, gapV = dSize * 0.55;
+  const b1 = r2(ruleY + 2 + 9 + dCap), b2 = r2(b1 + gapV + dCap);
+  const busW = line(light, 'BUSINESS', dSize, tr, 0, 0).end;
+  const busTr = tr + (w - busW) / (dSize * 7);                    // spread BUSINESS to the same width
+  const d1 = line(light, 'BUSINESS', dSize, busTr, P, b1);
+  const d2 = line(light, 'CONSULTING', dSize, tr, P, b2);
+  const WV = Math.ceil(w + 2 * P), HV = Math.ceil(b2 + P + 1);
+  const svgV = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WV} ${HV}" fill="none" role="img" aria-label="PSB Business Consulting">
+<path d="${psbV.d}" fill="${INK}"/>
+<rect x="${P}" y="${ruleY}" width="${r2(w)}" height="2" fill="${INK}"/>
+<path d="${d1.d}${d2.d}" fill="${INK}"/>
+</svg>
+`;
+  writeFileSync(join(root, 'public', 'img', 'logo-v.svg'), svgV);
+  console.log(`public/img/logo-v.svg  ${svgV.length} bytes  viewBox ${WV}x${HV}  descriptor ${dSize}`);
+}
