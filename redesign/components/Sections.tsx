@@ -162,22 +162,6 @@ export function Hero({ onLoadProgress }: { onLoadProgress: (v: number) => void }
       .fromTo(root.querySelectorAll('.hero-bar > *'), fade, shown, 1);
   }, [loaded, ready, staticMode]);
 
-  // slow zoom of the current photo (on a wrapper, so it never mixes with the slide-change tween on the <img>); the outgoing photo
-  // holds its zoom while the next one wipes in over it, then resets
-  const kbTw = useRef<gsap.core.Tween | null>(null);
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const kb = el.current?.querySelector<HTMLElement>(`[data-slide="${i}"] .hero-kb`);
-    if (!kb) return;
-    const tw = gsap.fromTo(kb, { scale: 1 }, { scale: 1.08, duration: 16, ease: 'none' });
-    if (window.scrollY > 4) tw.pause();
-    kbTw.current = tw;
-    return () => {
-      tw.pause();
-      setTimeout(() => { tw.kill(); if (kbTw.current !== tw && !kbTw.current?.targets().includes(kb)) gsap.set(kb, { clearProps: 'transform' }); }, 1800);
-    };
-  }, [i]);
-
   // preloader leaves as soon as the first photo is there
   useEffect(() => {
     const img = first.current;
@@ -193,12 +177,7 @@ export function Hero({ onLoadProgress }: { onLoadProgress: (v: number) => void }
   // once the page moves, nothing keeps animating under the block that rides over the hero (repaints there made block 01 flicker)
   useEffect(() => {
     const node = el.current!;
-    const on = () => {
-      const held = window.scrollY > 4;
-      node.classList.toggle('held', held);
-      const tw = kbTw.current;
-      if (tw && tw.paused() !== held && !node.querySelector('.hero-slide.was')) tw.paused(held);
-    };
+    const on = () => node.classList.toggle('held', window.scrollY > 4);
     on();
     window.addEventListener('scroll', on, { passive: true });
     return () => window.removeEventListener('scroll', on);
@@ -236,7 +215,8 @@ export function Hero({ onLoadProgress }: { onLoadProgress: (v: number) => void }
     const d = dir.current;
     const tl = gsap.timeline({ onComplete: () => { busy.current = false; setPrev(null); } });
     tl.fromTo(inc, { clipPath: d > 0 ? 'inset(0 0 0 100%)' : 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0%)', duration: 1.15, ease: 'expo.inOut' }, 0)
-      .fromTo(inc.querySelector('img'), { scale: 1.18, xPercent: d * 6 }, { scale: 1.04, xPercent: 0, duration: 1.6, ease: 'expo.out' }, 0)
+      // no zoom on a slide change (owner's call): the photo keeps one size, only a slight sideways drift under the wipe
+      .fromTo(inc.querySelector('img'), { xPercent: d * 3 }, { xPercent: 0, duration: 1.6, ease: 'expo.out' }, 0)
       .to(out.querySelector('img'), { xPercent: -d * 8, duration: 1.15, ease: 'expo.inOut' }, 0);
     if (lines?.length) tl.fromTo(lines, { yPercent: 110 }, { yPercent: 0, duration: 0.95, stagger: 0.09, ease: 'expo.out' }, 0.35);
     return () => { tl.kill(); busy.current = false; gsap.set([inc, out, inc.querySelector('img'), out.querySelector('img')], { clearProps: 'all' }); };
@@ -264,10 +244,8 @@ export function Hero({ onLoadProgress }: { onLoadProgress: (v: number) => void }
       <div className="hero-media" aria-hidden>
         {HERO.map((h, k) => (
           <div key={h.src} data-slide={k} className={`hero-slide${k === i ? ' on' : ''}${k === prev ? ' was' : ''}`}>
-            <div className="hero-kb">
-              <img ref={k === 0 ? first : undefined} src={h.src} srcSet={`${h.small} 960w, ${h.src} ${h.w}w`} sizes="100vw" alt="" width={h.w} height={h.h}
-                fetchPriority={k === 0 ? 'high' : 'low'} loading={k === 0 ? undefined : 'lazy'} decoding="async" />
-            </div>
+            <img ref={k === 0 ? first : undefined} src={h.src} srcSet={`${h.small} 960w, ${h.src} ${h.w}w`} sizes="100vw" alt="" width={h.w} height={h.h}
+              fetchPriority={k === 0 ? 'high' : 'low'} loading={k === 0 ? undefined : 'lazy'} decoding="async" />
           </div>
         ))}
         <span className="hero-veil" />

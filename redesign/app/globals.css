@@ -196,10 +196,9 @@ html.static .hero-media{will-change:auto}
 @keyframes grow{from{scale:1 0}to{scale:1 1}}
 /* Hero motion (entrance, slow photo zoom) runs on GSAP, not CSS animations: every ScrollTrigger refresh takes the pinned hero
    out of its pin spacer and puts it back, and moving an element restarts its CSS animations (the gold column grew again from
-   nothing, the photo zoom snapped back). Until the entrance starts (.go) the parts wait hidden. */
+   nothing). The photos do not zoom at all. Until the entrance starts (.go) the parts wait hidden. */
 .hero:not(.go) .hero-gold{transform:scaleY(0)}
 .hero:not(.go) :is(.hero-k,.hero-foot,.hero-bar,h1 b){opacity:0}
-.hero-kb{position:absolute;inset:0}
 @keyframes drip{0%{scale:1 0;opacity:1}60%{scale:1 1;opacity:1}100%{scale:1 1;opacity:0}}
 @media (prefers-reduced-motion:reduce){
   .hero h1 b,.hero-k,.hero-foot,.hero-bar,.hero-gold{animation:none}
