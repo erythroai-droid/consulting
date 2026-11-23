@@ -147,9 +147,36 @@ export function Hero({ onLoadProgress }: { onLoadProgress: (v: number) => void }
     const late = setTimeout(done, 1800);
     return () => { clearTimeout(late); img.removeEventListener('load', done); img.removeEventListener('error', done); };
   }, []);
+  // GSAP, not CSS animations: a ScrollTrigger refresh moves the pinned hero out of its spacer and back, which restarts CSS animations
   useEffect(() => {
-    if (loaded && (ready || staticMode)) el.current?.classList.add('go');
+    const root = el.current;
+    if (!root || !loaded || !(ready || staticMode) || root.classList.contains('go')) return;
+    root.classList.add('go');
+    if (prefersReducedMotion()) return;
+    const fade = { autoAlpha: 0, y: 14 }, shown = { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power2.out', clearProps: 'opacity,visibility,transform' };
+    gsap.timeline()
+      .fromTo(root.querySelector('.hero-gold'), { scaleY: 0, transformOrigin: '50% 0%' }, { scaleY: 1, duration: 1.4, ease: 'expo.out', clearProps: 'transform' }, 0.15)
+      .fromTo(root.querySelectorAll('.hero-in h1 b'), { yPercent: 110 }, { yPercent: 0, duration: 1.1, ease: 'expo.out', stagger: 0.15, clearProps: 'transform' }, 0.35)
+      .fromTo(root.querySelector('.hero-k'), fade, shown, 0.5)
+      .fromTo(root.querySelector('.hero-foot'), fade, shown, 0.8)
+      .fromTo(root.querySelectorAll('.hero-bar > *'), fade, shown, 1);
   }, [loaded, ready, staticMode]);
+
+  // slow zoom of the current photo (on a wrapper, so it never mixes with the slide-change tween on the <img>); the outgoing photo
+  // holds its zoom while the next one wipes in over it, then resets
+  const kbTw = useRef<gsap.core.Tween | null>(null);
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    const kb = el.current?.querySelector<HTMLElement>(`[data-slide="${i}"] .hero-kb`);
+    if (!kb) return;
+    const tw = gsap.fromTo(kb, { scale: 1 }, { scale: 1.08, duration: 16, ease: 'none' });
+    if (window.scrollY > 4) tw.pause();
+    kbTw.current = tw;
+    return () => {
+      tw.pause();
+      setTimeout(() => { tw.kill(); if (kbTw.current !== tw && !kbTw.current?.targets().includes(kb)) gsap.set(kb, { clearProps: 'transform' }); }, 1800);
+    };
+  }, [i]);
 
   // preloader leaves as soon as the first photo is there
   useEffect(() => {
@@ -166,7 +193,12 @@ export function Hero({ onLoadProgress }: { onLoadProgress: (v: number) => void }
   // once the page moves, nothing keeps animating under the block that rides over the hero (repaints there made block 01 flicker)
   useEffect(() => {
     const node = el.current!;
-    const on = () => node.classList.toggle('held', window.scrollY > 4);
+    const on = () => {
+      const held = window.scrollY > 4;
+      node.classList.toggle('held', held);
+      const tw = kbTw.current;
+      if (tw && tw.paused() !== held && !node.querySelector('.hero-slide.was')) tw.paused(held);
+    };
     on();
     window.addEventListener('scroll', on, { passive: true });
     return () => window.removeEventListener('scroll', on);
@@ -232,8 +264,10 @@ export function Hero({ onLoadProgress }: { onLoadProgress: (v: number) => void }
       <div className="hero-media" aria-hidden>
         {HERO.map((h, k) => (
           <div key={h.src} data-slide={k} className={`hero-slide${k === i ? ' on' : ''}${k === prev ? ' was' : ''}`}>
-            <img ref={k === 0 ? first : undefined} src={h.src} srcSet={`${h.small} 960w, ${h.src} ${h.w}w`} sizes="100vw" alt="" width={h.w} height={h.h}
-              fetchPriority={k === 0 ? 'high' : 'low'} loading={k === 0 ? undefined : 'lazy'} decoding="async" />
+            <div className="hero-kb">
+              <img ref={k === 0 ? first : undefined} src={h.src} srcSet={`${h.small} 960w, ${h.src} ${h.w}w`} sizes="100vw" alt="" width={h.w} height={h.h}
+                fetchPriority={k === 0 ? 'high' : 'low'} loading={k === 0 ? undefined : 'lazy'} decoding="async" />
+            </div>
           </div>
         ))}
         <span className="hero-veil" />

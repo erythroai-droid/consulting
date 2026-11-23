@@ -37,7 +37,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <head>
         {/* decide the static (no-animation) layout before first paint, so phones never flash the animated one */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.toggle('static',matchMedia('(max-width: 900px), (prefers-reduced-motion: reduce), (hover: none) and (pointer: coarse)').matches)" }} />
+        {/* + the demo studio frame's class (strip, CTA band) before first paint: added later by StudioBar it shifted the header and the hero text */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.toggle('static',matchMedia('(max-width: 900px), (prefers-reduced-motion: reduce), (hover: none) and (pointer: coarse)').matches)" + (process.env.NEXT_PUBLIC_DEMO_NOTICE !== '0' ? ";document.documentElement.classList.add('has-studio')" : '') }} />
       </head>
       <body>
         <I18nProvider>{children}</I18nProvider>
