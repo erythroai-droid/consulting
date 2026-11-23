@@ -135,6 +135,22 @@ export function Hero({ onLoadProgress }: { onLoadProgress: (v: number) => void }
 
   useEffect(() => { if (prefersReducedMotion()) setPlaying(false); }, []);
 
+  // entrance (gold column, title, controls) starts once the hero sits where it stays: after the pin wraps it on the animated page
+  // (useStack above runs first), right away on the static one, and not before the first photo is in (or the preloader gave up)
+  const staticMode = useStaticMode();
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const img = first.current;
+    const done = () => setLoaded(true);
+    if (!img || img.complete) { done(); return; }
+    img.addEventListener('load', done); img.addEventListener('error', done);
+    const late = setTimeout(done, 1800);
+    return () => { clearTimeout(late); img.removeEventListener('load', done); img.removeEventListener('error', done); };
+  }, []);
+  useEffect(() => {
+    if (loaded && (ready || staticMode)) el.current?.classList.add('go');
+  }, [loaded, ready, staticMode]);
+
   // preloader leaves as soon as the first photo is there
   useEffect(() => {
     const img = first.current;
