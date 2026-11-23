@@ -139,3 +139,25 @@ d_send = Send request
 f_team = Team
 f_rights = © Copyright 2019 PSB Consulting
 f_made = Professional business support
+
+demo_strip = Demo · Erythro.ai
+demo_more = View more work
+demo_cta = I want a site like this
+demo_msg = Hi! I saw the {name} demo and I'd love a site like this for my business.
+
+ai_open = AI Consultant
+ai_title = AI Consultant
+ai_sub = Demo · Canned responses
+ai_ph = Ask about ready-made companies, LLC registration, digital signatures…
+ai_send = Send
+ai_typing = Typing…
+ai_hello = Hello! I'm the PSB Consulting AI Consultant. Ask me about ready-made companies, LLC incorporation, corporate registry amendments, or digital signatures.
+ai_q1 = What is included with a ready-made company?
+ai_q2 = How long does LLC registration take?
+ai_q3 = How much do the services cost?
+ai_q4 = How do I submit an inquiry?
+ai_a1 = A legally verified company complete with articles of association, corporate seal, and business bank account, with a registered legal address available upon request. You can begin operations immediately once ownership transfer is finalized.
+ai_a2 = Document preparation takes 1–2 business days; tax authority registration takes about 3 business days. We handle all filings on your behalf.
+ai_a3 = Ready-made company rates are listed on this page. Exact pricing for LLC registration and corporate registry amendments will be provided by an account manager after a brief consultation.
+ai_a4 = Click “Request a call” in the header or fill out the form at the bottom of the page—this is a demo form. In production, leads route directly to the CRM, and the assistant runs on erythro.ai's consultant stack powered by Gemini.
+ai_a0 = Thanks for reaching out! This is an interactive demo without a connected model or knowledge base. The production version answers queries on company services and pricing powered by erythro.ai's consultant stack.

@@ -215,6 +215,8 @@ function initMagnet(ln: Lenis) {
     if (ln.isStopped || e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;   // open dialog, pinch-zoom, sideways swipe
     const d = Math.sign(e.deltaY);
     if (!d || innerScroller(e.target, d)) return;
+    // over the AI chat panel: its list scrolls natively (or nothing moves), the page never steps under it
+    if (e.target instanceof Element && e.target.closest(".ai")) { e.preventDefault(); return; }
     if (!busy() && insideTall(window.scrollY, d)) return;                                  // let Lenis scroll a tall block
     e.preventDefault(); e.stopPropagation();                                              // Lenis and the browser stay out of it
     const now = performance.now(), abs = Math.abs(e.deltaY);
@@ -227,7 +229,7 @@ function initMagnet(ln: Lenis) {
   const onKey = (e: KeyboardEvent) => {
     if (ln.isStopped || e.altKey || e.ctrlKey || e.metaKey) return;
     const el = e.target as HTMLElement;
-    if (el.closest("input, textarea, select, [contenteditable], dialog")) return;
+    if (el.closest("input, textarea, select, [contenteditable], dialog, .ai")) return;
     const down = ["PageDown", "ArrowDown"].includes(e.key) || (e.key === " " && !e.shiftKey && !el.closest("button, a"));
     const up = ["PageUp", "ArrowUp"].includes(e.key) || (e.key === " " && e.shiftKey && !el.closest("button, a"));
     if (!down && !up) return;

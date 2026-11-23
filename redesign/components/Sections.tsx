@@ -594,7 +594,11 @@ export function Footer() {
       const byWidth = ((document.documentElement.clientWidth - 2 * parseFloat(getComputedStyle(el.current!).paddingLeft)) / w) * 100;
       // on a static (phone) page the footer grows freely; otherwise the line is capped so the whole block fits one screen
       const byHeight = document.documentElement.classList.contains('static') ? Infinity : (window.innerHeight * 0.15) / 1;   // line .86 + padding .04 + .1 below so the letters are not cut
-      node.style.fontSize = `${Math.min(byWidth, byHeight)}px`;
+      const size = Math.min(byWidth, byHeight);
+      node.style.fontSize = `${size}px`;
+      // the demo studio frame (strip + CTA band) takes part of the screen: shrink the line by whatever still spills over
+      const over = Number.isFinite(byHeight) ? el.current.offsetHeight - window.innerHeight : 0;
+      if (over > 0) node.style.fontSize = `${Math.max(40, size - over / 0.95)}px`;
     };
     fit();
     document.fonts?.ready.then(fit);

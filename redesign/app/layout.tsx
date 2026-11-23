@@ -16,6 +16,9 @@ import '@fontsource/oswald/cyrillic-400.css';
 import '@fontsource/oswald/cyrillic-500.css';
 import './globals.css';
 import { I18nProvider } from '@/lib/i18n';
+import { Analytics } from '@vercel/analytics/next';
+import { GoogleAnalytics } from '@/components/GoogleAnalytics';
+import { MetaPixel } from '@/components/MetaPixel';
 
 const title = 'PSB Consulting — accounting and legal consulting';
 const description = 'Ready-made companies with bank accounts, turnkey LLC registration, corporate documents, state register changes and digital signatures. Phone: +7 963 04-80-28.';
@@ -38,6 +41,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <I18nProvider>{children}</I18nProvider>
+        {/* Vercel Web Analytics, GA4 (production only) and the Meta Pixel; ids and on/off in lib/ga.ts, lib/metaPixel.ts */}
+        <Analytics />
+        <GoogleAnalytics />
+        <MetaPixel />
       </body>
     </html>
   );

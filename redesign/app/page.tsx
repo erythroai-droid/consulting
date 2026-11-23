@@ -4,6 +4,9 @@ import Header from '@/components/Header';
 import Preloader from '@/components/Preloader';
 import ScrollTop from '@/components/ScrollTop';
 import RequestDialog from '@/components/RequestDialog';
+import AiChat from '@/components/AiChat';
+import StudioBar from '@/components/StudioBar';
+import Metrics from '@/components/Metrics';
 import { About, Catalog, Footer, Hero, Partners, Reviews, Services, useLateRefresh } from '@/components/Sections';
 import { SmoothScroll } from '@/lib/scroll';
 
@@ -21,6 +24,9 @@ export default function Page() {
       <Header />
       <ScrollTop />
       <RequestDialog />
+      <AiChat />
+      <StudioBar />
+      <Metrics />
       <SmoothScroll><Content onLoadProgress={(v) => setPct((p) => Math.max(p, v))} /></SmoothScroll>
     </>
   );
