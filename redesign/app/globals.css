@@ -166,10 +166,13 @@ html.static .hero-media{will-change:auto}
 .hero-in{position:absolute;z-index:5;inset-inline-start:calc(var(--gx) + clamp(40px,6.8vw,190px));inset-inline-end:var(--gx);bottom:calc(clamp(110px,20vh,260px) + var(--sbar));top:calc(var(--logo-big) + var(--strip) + clamp(16px,4vh,60px));display:flex;flex-direction:column;justify-content:safe flex-end}
 .hero-k{display:flex;align-items:center;gap:16px;font-family:var(--cond);font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:#fff;margin-block-end:clamp(18px,3vh,34px)}
 .hero-k::before{content:"";width:46px;height:1px;background:currentColor}
-.hero h1{font-family:var(--serif);font-size:clamp(34px,min(5.2vw,9vh),140px);line-height:1.06;letter-spacing:-.01em;max-width:17ch}
-.hero h1 span{display:block;overflow:visible clip;padding-block-end:.08em;margin-block-end:-.08em}
-.hero h1 b{display:block;font-weight:400}
-.hero h1 em{font-style:italic;color:#fff}
+.hero-tt{display:grid;align-items:end}
+.hero-tt>*{grid-area:1 / 1}
+.hero-ghost{visibility:hidden}
+.hero :is(h1,.hero-ghost){font-family:var(--serif);font-size:clamp(34px,min(5.2vw,9vh),140px);line-height:1.06;letter-spacing:-.01em;max-width:23ch}
+.hero :is(h1,.hero-ghost) span{display:block;overflow:visible clip;padding-block-end:.08em;margin-block-end:-.08em}
+.hero :is(h1,.hero-ghost) b{display:block;font-weight:400}
+.hero :is(h1,.hero-ghost) em{font-style:italic;color:#fff}
 .hero-foot{display:flex;align-items:center;gap:clamp(24px,3vw,56px);flex-wrap:wrap;margin-block-start:clamp(24px,4vh,48px)}
 .hero-foot p{max-width:470px;color:rgba(255,255,255,.82);font-weight:300;font-size:clamp(15px,1vw,18px)}
 .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
@@ -444,7 +447,7 @@ html.static .srv,html.static .par{border-radius:0;box-shadow:none}
   .hero{min-height:560px}
   :root{--logo-big:64px}
   .hero-in{inset-inline-start:var(--gx);bottom:130px}
-  .hero h1{font-size:clamp(34px,9vw,60px)}
+  .hero :is(h1,.hero-ghost){font-size:clamp(34px,9vw,60px)}
   .hero-foot p{display:none}
   .hero-cta .btn:not(.solid){display:none}
   .hero-bar{grid-template-columns:1fr;justify-items:start}
@@ -644,7 +647,10 @@ html.static .ftr{min-height:0}
   .hdr.solid{padding-block:8px}
   .logo.stack picture{display:block}
   .hero-in{inset-inline-end:var(--gx)}
-  .hero h1{max-width:none;font-size:clamp(36px,10.4vw,64px)}
+  .hero :is(h1,.hero-ghost){max-width:none;font-size:clamp(32px,9.4vw,60px)}
+  /* the text block ends above the slider controls: their offset (incl. the demo bar) + their 44px height + a gap */
+  .hero-in{bottom:calc(clamp(22px,3.5vh,40px) + var(--sbar) + 44px + 22px)}
+  .hero{height:clamp(600px,86svh,760px)}
   .hero-foot{justify-content:flex-end}
   .hero-bar{justify-items:end}
   /* the controls now sit partly over the gold column: the gold "previous" button would vanish there */

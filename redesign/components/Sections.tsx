@@ -99,10 +99,20 @@ function HeroText({ h1, h2, live }: { h1: string; h2: string; live?: 'off' | 'po
   return (
     <div className="hero-in">
       <p className="hero-k">{t('hero_k')}</p>
-      <h1 aria-live={live}>
-        <span><b>{h1}</b></span>
-        <span><b><em>{h2}</em></b></span>
-      </h1>
+      {/* every slide's title sits invisibly in the same grid cell, so the block keeps the height of the tallest one
+          and the buttons below never move when the title changes */}
+      <div className="hero-tt">
+        {HERO.map((h) => (
+          <p key={h.src} className="hero-ghost" aria-hidden>
+            <span><b>{t(h.h1)}</b></span>
+            <span><b><em>{t(h.h2)}</em></b></span>
+          </p>
+        ))}
+        <h1 aria-live={live}>
+          <span><b>{h1}</b></span>
+          <span><b><em>{h2}</em></b></span>
+        </h1>
+      </div>
       <div className="hero-foot">
         <p>{t('hero_p')}</p>
         <div className="hero-cta">
