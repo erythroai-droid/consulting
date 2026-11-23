@@ -558,7 +558,7 @@ export function Partners() {
   const { t } = useI18n();
   const [paused, setPaused] = useState(false);
   useEffect(() => { if (prefersReducedMotion()) setPaused(true); }, []);
-  const set = [...PARTNERS, ...PARTNERS, ...PARTNERS];   // one half: wide enough to fill a 2560px screen
+  const set = [...PARTNERS, ...PARTNERS];   // one half (16 cards): wide enough to fill a 2560px screen
   return (
     <section className={`sec par${paused ? ' paused' : ''}`} data-tone="light" aria-labelledby="par-h">
       <div className="par-top">

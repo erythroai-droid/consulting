@@ -489,7 +489,7 @@ html.static .srv,html.static .par{border-radius:0;box-shadow:none}
 .dk-bg img{opacity:.1}
 .par{padding-block-end:clamp(60px,9vh,110px)}
 .par-card{background:var(--white);border:1px solid var(--gray)}
-.par-card img{mix-blend-mode:multiply}
+.par-card img{mix-blend-mode:multiply;filter:grayscale(1) brightness(1.08) contrast(1.05)}
 .par-card:hover{border-color:transparent}
 @media (max-width:520px){
   .hero-ctl{gap:8px}

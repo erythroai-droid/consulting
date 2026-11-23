@@ -62,8 +62,12 @@ export const REVIEWS = [
 ] as const;
 
 export const PARTNERS = [
-  { src: '/img/partners/rossiya.png', alt: 'Rossiya', w: 270, h: 170 },
-  { src: '/img/partners/rostelecom.png', alt: 'Ростелеком', w: 270, h: 169 },
-  { src: '/img/partners/business-finance.png', alt: 'Бизнес Финанс', w: 185, h: 117 },
-  { src: '/img/partners/sberbank.png', alt: 'Сбербанк', w: 194, h: 128 },
+  { src: '/img/logos/1.jpg', alt: 'Arrow', w: 150, h: 95 },
+  { src: '/img/logos/2.jpg', alt: 'Growth', w: 150, h: 95 },
+  { src: '/img/logos/3.jpg', alt: 'Rawilly', w: 150, h: 95 },
+  { src: '/img/logos/4.jpg', alt: 'Lambo', w: 150, h: 95 },
+  { src: '/img/logos/5.jpg', alt: 'Connect', w: 150, h: 95 },
+  { src: '/img/logos/6.jpg', alt: 'Star', w: 150, h: 95 },
+  { src: '/img/logos/7.jpg', alt: 'Aesthetic', w: 150, h: 95 },
+  { src: '/img/logos/8.jpg', alt: 'M', w: 150, h: 95 },
 ] as const;
