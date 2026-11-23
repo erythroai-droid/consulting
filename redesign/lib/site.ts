@@ -32,8 +32,8 @@ export const FOOTER_NAV = [
 ] as const;
 
 export const HERO = [
-  { src: '/img/hero-1.webp', small: '/img/hero-1-960.webp', w: 1440, h: 730, h1: 'hero1_a', h2: 'hero1_b' },
-  { src: '/img/hero-2.webp', small: '/img/hero-2-960.webp', w: 1376, h: 768, h1: 'hero2_a', h2: 'hero2_b' },
+  { src: '/img/hero-4.webp', small: '/img/hero-4-960.webp', w: 1920, h: 1281, h1: 'hero1_a', h2: 'hero1_b' },
+  { src: '/img/hero-5.webp', small: '/img/hero-5-960.webp', w: 1920, h: 1281, h1: 'hero2_a', h2: 'hero2_b' },
   { src: '/img/hero-3.webp', small: '/img/hero-3-960.webp', w: 1200, h: 896, h1: 'hero3_a', h2: 'hero3_b' },
 ] as const;
 
