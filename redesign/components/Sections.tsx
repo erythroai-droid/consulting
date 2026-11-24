@@ -2,6 +2,7 @@
 import { CSSProperties, MouseEvent, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import Reveal from './Reveal';
 import LeadForm from './LeadForm';
+import { ServiceIcon } from './ServiceIcons';
 import { openRequest } from './RequestDialog';
 import { useI18n } from '@/lib/i18n';
 import { gsap, goToSection, prefersReducedMotion, ScrollTrigger, useScrollReady, useStaticMode } from '@/lib/scroll';
@@ -310,7 +311,7 @@ export function Services() {
             <Reveal delay={70 * k} from="up">
               <a href={s.href} className="srv-card" onClick={(e: MouseEvent) => { e.preventDefault(); goToSection(s.href); }}>
                 <i className="srv-n">{pad(k + 1)}</i>
-                <Ico src={s.icon} className="srv-ico" />
+                <ServiceIcon name={s.icon} className="srv-ico" />
                 <h3>{t(s.t)}</h3>
                 <p>{t(s.p)}</p>
                 <span className="srv-go" aria-hidden><Arrow /></span>

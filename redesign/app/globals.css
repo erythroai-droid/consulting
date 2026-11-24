@@ -218,7 +218,12 @@ html.static .hero-media{will-change:auto}
 .srv-card::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--gold);scale:1 0;transform-origin:bottom;transition:scale .6s var(--ease)}
 .srv-card:hover::before,.srv-card:focus-visible::before{scale:1 1}
 .srv-n{font-family:var(--cond);font-style:normal;font-size:14px;letter-spacing:.2em;color:var(--mute);transition:color .4s}
-.srv-ico{font-size:clamp(52px,4.2vw,84px);margin-block:auto clamp(22px,3vh,40px);transition:translate .6s var(--ease),scale .6s var(--ease)}
+.srv-card{--srv-ac:var(--gold);--srv-bg:var(--paper)}
+.srv-card:hover,.srv-card:focus-visible{--srv-ac:var(--white);--srv-bg:var(--gold)}
+.srv-ico{flex:none;font-size:clamp(60px,4.8vw,96px);margin-block:auto clamp(22px,3vh,40px);overflow:visible;transition:translate .6s var(--ease),scale .6s var(--ease)}
+.srv-sq{fill:var(--srv-ac);stroke:none;transform-box:fill-box;transform-origin:0 100%;transition:fill .4s,scale .6s var(--ease)}
+.srv-card:hover .srv-sq{scale:1.14}
+.srv-bg{fill:var(--srv-bg);transition:fill .4s}
 .srv-card:hover .srv-ico{translate:0 -10px;scale:1.06}
 .srv-card h3{font-family:var(--serif);text-transform:uppercase;font-size:clamp(16px,1.15vw,22px);line-height:1.35;letter-spacing:.02em;margin-block-end:12px;min-height:2.7em}
 .srv-card p{font-size:14px;line-height:1.6;color:var(--mute);transition:color .4s;max-width:30ch}

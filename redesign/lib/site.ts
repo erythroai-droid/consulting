@@ -38,11 +38,11 @@ export const HERO = [
 ] as const;
 
 export const SERVICES = [
-  { icon: '/icons/folder.svg', t: 'srv1', p: 'srv1_p', href: '#catalog' },
-  { icon: '/icons/stamp.svg', t: 'srv2', p: 'srv2_p', href: '#contacts' },
-  { icon: '/icons/documents.svg', t: 'srv3', p: 'srv3_p', href: '#contacts' },
-  { icon: '/icons/correct.svg', t: 'srv4', p: 'srv4_p', href: '#contacts' },
-  { icon: '/icons/usb.svg', t: 'srv5', p: 'srv5_p', href: '#contacts' },
+  { icon: 'company', t: 'srv1', p: 'srv1_p', href: '#catalog' },
+  { icon: 'register', t: 'srv2', p: 'srv2_p', href: '#contacts' },
+  { icon: 'docs', t: 'srv3', p: 'srv3_p', href: '#contacts' },
+  { icon: 'changes', t: 'srv4', p: 'srv4_p', href: '#contacts' },
+  { icon: 'esign', t: 'srv5', p: 'srv5_p', href: '#contacts' },
 ] as const;
 
 /** Demo catalog rows (the mockup repeats one row; replace with the real catalog). acc = key of the account text. */
